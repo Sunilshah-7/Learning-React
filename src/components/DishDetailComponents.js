@@ -15,30 +15,28 @@ import {Link} from 'react-router-dom';
         )
     }
     function RenderComments({comments}){
-        const selectedDishComments = comments.map((comment) => {
-            return (
-            <div key={comment.id}>
-            <ul className="list-unstyled">
-                <li>{comment.comment}</li>
-                <li>--{comment.author}, {new Intl.DateTimeFormat("en-GB", {
-                                        year: "numeric",
-                                        month: "long",
-                                        day: "2-digit"
-                                        }).format(new Date(comment.date))}
-                </li>
-            </ul>
-            </div>
+        if(comments != null){
+            return(
+                <div className="col-12 col-md-5 m-1">
+                    <h4>Comments</h4>
+                    <ul className="list-unstyled">
+                        {comments.map((comment)=>{
+                            return(
+                            <li key={comment.id}>
+                                <p>{comment.comment}</p>
+                                <p>--{comment.author}, {new Intl.DateTimeFormat("en-GB", {
+                                                        year: "numeric",
+                                                        month: "long",
+                                                        day: "2-digit"
+                                                        }).format(new Date(comment.date))}
+                                </p>
+                            </li>
+                            );
+                        })}
+                    </ul>
+                </div>
             );
-        });
-
-        return (
-            <div>
-                <h4>Comments</h4>
-                <div>{selectedDishComments}</div>               
-            </div>
-  
-        );
-        
+        }
     }
     
     const DishDetail = (props) =>{
@@ -55,9 +53,9 @@ import {Link} from 'react-router-dom';
                             <hr />
                         </div>
                     </div>
-                    <div className="row">      
-                        <RenderDish dish={props.dish} />
-                        <RenderComments comment={props.comment} />  
+                    <div className="row">                    
+                        <RenderDish dish={props.dish} />                    
+                        <RenderComments comments={props.comments} />                    
                     </div>
                 </div>                              
             )
